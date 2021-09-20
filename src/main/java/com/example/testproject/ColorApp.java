@@ -32,10 +32,16 @@ public class ColorApp extends Application {
 
     Color currentColor;
 
-    Slider redSlider;
-    Slider greenSlider;
-    Slider blueSlider;
+    // old
+//    Slider redSlider;
+//    Slider greenSlider;
+//    Slider blueSlider;
+
     ColorPalette colorPalette;
+
+    ColorSlider redSlider;
+    ColorSlider greenSlider;
+    ColorSlider blueSlider;
 
     int pointer = 0;
     static final int NUMBER_OF_ELEMENTS = 3;
@@ -65,59 +71,82 @@ public class ColorApp extends Application {
         HBox allSliderElement = new HBox();
 
         // Labels for the colors
-        Label red = new Label("Red:");
-        Label green = new Label("Green:");
-        Label blue = new Label("Blue:");
-
-        ColorSlider colorSlider1 = new ColorSlider("Red");
-        System.out.println(colorSlider1.slider);
+//        Label red = new Label("Red:");
+//        Label green = new Label("Green:");
+//        Label blue = new Label("Blue:");
 
         // Sliders
-        Label redVal = new Label();
-        redSlider = new Slider(0,255,50);
-        redVal.setText(String.valueOf((int)redSlider.getValue()));
-        redSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            redVal.setText(String.valueOf(newValue.intValue()));
+
+        redSlider = new ColorSlider("Red:");
+        redSlider.setValue(redSlider.getSliderValue());
+        redSlider.getValueProperty().addListener(((observableValue, oldValue, newValue) -> {
+            redSlider.setValue(newValue .intValue());
             setColor();
-//            System.out.println(currentColor);
-        });
+        }));
+//        System.out.println(redSlider.slider);
 
-        Label greenVal = new Label();
-        greenSlider = new Slider(0,255,50);
-        greenVal.setText(String.valueOf((int)greenSlider.getValue()));
-        greenSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            greenVal.setText(String.valueOf(newValue.intValue()));
+        // old
+//        Label redVal = new Label();
+//        redSlider = new Slider(0,255,50);
+//        redVal.setText(String.valueOf((int)redSlider.getValue()));
+//        redSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+//            redVal.setText(String.valueOf(newValue.intValue()));
+//            setColor();
+////            System.out.println(currentColor);
+//        });
+
+        greenSlider = new ColorSlider("Green:");
+        greenSlider.setValue(greenSlider.getSliderValue());
+        greenSlider.getValueProperty().addListener(((observableValue, oldValue, newValue) -> {
+            greenSlider.setValue(newValue.intValue());
             setColor();
-//            System.out.println(currentColor);
+        }));
+//        System.out.println(greenSlider.slider);
 
+        // old
+//        Label greenVal = new Label();
+//        greenSlider = new Slider(0,255,50);
+//        greenVal.setText(String.valueOf((int)greenSlider.getValue()));
+//        greenSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+//            greenVal.setText(String.valueOf(newValue.intValue()));
+//            setColor();
+////            System.out.println(currentColor);
+//        });
 
-        });
-
-        Label blueVal = new Label();
-        blueSlider = new Slider(0,255,50);
-        blueVal.setText(String.valueOf((int)blueSlider.getValue()));
-        blueSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            blueVal.setText(String.valueOf(newValue.intValue()));
+        blueSlider = new ColorSlider("Blue:");
+        blueSlider.setValue(blueSlider.getSliderValue());
+        blueSlider.getValueProperty().addListener(((observableValue, oldValue, newValue) -> {
+            blueSlider.setValue(newValue .intValue());
             setColor();
-//            System.out.println(currentColor);
+        }));
+//        System.out.println(blueSlider.slider);
 
-        });
+        // old
+//        Label blueVal = new Label();
+//        blueSlider = new Slider(0,255,50);
+//        blueVal.setText(String.valueOf((int)blueSlider.getValue()));
+//        blueSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+//            blueVal.setText(String.valueOf(newValue.intValue()));
+//            setColor();
+////            System.out.println(currentColor);
+//        });
+
 
         // Slider's names
         sliderCaption.setSpacing(5);
         sliderCaption.setPadding(new Insets(10));
-        sliderCaption.getChildren().addAll(red,green,blue);
+        sliderCaption.getChildren().addAll(redSlider.getTitle(),greenSlider.getTitle(),blueSlider.getTitle());
 
         // Actual sliders
         sliders.setSpacing(10);
         sliders.setPadding(new Insets(10));
-        sliders.getChildren().addAll(redSlider,greenSlider,blueSlider);
+        sliders.getChildren().addAll(redSlider.getSlider(),greenSlider.getSlider(), blueSlider.getSlider());
 
         // Slider values
         VBox sliderValues = new VBox();
         sliderValues.setSpacing(10);
         sliderValues.setPadding(new Insets(5));
-        sliderValues.getChildren().addAll(redVal, greenVal, blueVal);
+        sliderValues.getChildren().addAll(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue());
 
         // Add all the elements into HBox to get a column layout
         allSliderElement.getChildren().addAll(sliderCaption, sliders, sliderValues);
@@ -190,21 +219,21 @@ public class ColorApp extends Application {
     }
 
     public void setColor(){
-        int red = redSlider.valueProperty().getValue().intValue();
-        int green = greenSlider.valueProperty().getValue().intValue();
-        int blue = blueSlider.valueProperty().getValue().intValue();
+        int red = redSlider.getSliderValue();
+        int green = greenSlider.getSliderValue();
+        int blue = blueSlider.getSliderValue();
 
         currentColor = Color.rgb(red, green, blue);
         circle.setFill(currentColor);
     }
 
-    public List<Integer> getRGB(){
-        int red = redSlider.valueProperty().getValue().intValue();
-        int green = greenSlider.valueProperty().getValue().intValue();
-        int blue = blueSlider.valueProperty().getValue().intValue();
-
-        return Arrays.asList(red, green, blue);
-    }
+//    public List<Integer> getRGB(){
+//        int red = redSlider.valueProperty().getValue().intValue();
+//        int green = greenSlider.valueProperty().getValue().intValue();
+//        int blue = blueSlider.valueProperty().getValue().intValue();
+//
+//        return Arrays.asList(red, green, blue);
+//    }
 
     public static void main(String[] args) {
         launch();
