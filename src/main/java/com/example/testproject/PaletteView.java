@@ -1,5 +1,6 @@
 package com.example.testproject;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -9,33 +10,35 @@ import javafx.scene.shape.Circle;
 public class PaletteView extends Pane {
 
     Circle[] circleList = new Circle[3];
-    HBox circles = new HBox();
+    Circle circle1;
+    Circle circle2;
+    Circle circle3;
+
     ColorPalette colorPalette;
 
     public PaletteView(ColorPalette cp) {
-        this.colorPalette = cp;
-        drawCircles();
-    }
-
-    public PaletteView(){
-        colorPalette = new ColorPalette();
-        drawCircles();
-    }
-
-    private void drawCircles(){
-        for (int i = 0; i < circleList.length; i++){
-            circleList[i] = new Circle(50);
-            circleList[i].setFill(Color.rgb(50,50,50));
-            circles.getChildren().add(circleList[i]);
-
+        if (cp == null){
+            colorPalette = new ColorPalette();
+        }else{
+            this.colorPalette = cp;
+            circle1 = new Circle(50);
+            circle2 = new Circle(50);
+            circle3 = new Circle(50);
+            circleFill();
         }
-    }
 
-    public HBox getCircles(){
-        return circles;
+    }
+    private void circleFill(){
+        circle1.setFill(colorPalette.firstColor);
+        circle2.setFill(colorPalette.secondColor);
+        circle3.setFill(colorPalette.thirdColor);
     }
 
     public Circle[] getCircleList(){
+        circleList[0] = circle1;
+        circleList[1] = circle2;
+        circleList[2] = circle3;
+
         return circleList;
     }
 

@@ -25,11 +25,10 @@ import java.util.*;
 
 public class ColorApp extends Application {
 
-    Text headline;
     Circle circle;
-    ListView<String> listView;
-    Label label1;
-
+//    ListView<String> listView;
+    ColorPalette colorPalette;
+    ListView<ColorPalette> listView;
     Color currentColor;
 
     // old
@@ -37,7 +36,6 @@ public class ColorApp extends Application {
 //    Slider greenSlider;
 //    Slider blueSlider;
 
-    ColorPalette colorPalette;
 
     ColorSlider redSlider;
     ColorSlider greenSlider;
@@ -54,7 +52,6 @@ public class ColorApp extends Application {
         VBox left = new VBox();
         VBox right = new VBox();
         VBox palette = new VBox();
-
 
         // Circle VBox
         VBox cir = new VBox();
@@ -176,9 +173,9 @@ public class ColorApp extends Application {
         pButton.setText("Add to Palette");
         colorPalette = new ColorPalette();
 
+        HBox circles = new HBox();
         PaletteView pv = new PaletteView(colorPalette);
-        pv.circles.setAlignment(Pos.CENTER);
-        pv.circles.setPadding(new Insets(5));
+        circles.getChildren().addAll(pv.circle1,pv.circle2, pv.circle3);
 
         pButton.setOnAction(e -> colorPalette.addColor(currentColor));
         pButton.setOnMouseClicked(e -> {
@@ -192,20 +189,24 @@ public class ColorApp extends Application {
 
         // List View
         listView = new ListView<>();
-        ObservableList<String> listItems = FXCollections.observableArrayList("Test1", "Test2");
+//        ObservableList<String> listItems = FXCollections.observableArrayList("Test1", "Test2");
+        ObservableList<ColorPalette> listItems = FXCollections.observableArrayList();
         listView.setItems(listItems);
+        listView.setCellFactory(listItem -> new PaletteCell());
         listView.setPrefHeight(415);
 
         // Add to list button
         Button lButton = new Button();
         lButton.setText("Add to List");
         lButton.setOnAction(e -> {
-            listItems.add(colorPalette.getColorList().toString());
+            System.out.println(colorPalette);
+            listItems.addAll(colorPalette);
+
 
         });
 
         palette.setAlignment(Pos.CENTER);
-        palette.getChildren().addAll(pButton,pv.circles, lButton);
+        palette.getChildren().addAll(pButton,circles, lButton);
 
 
         // left and right
