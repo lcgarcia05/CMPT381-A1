@@ -156,17 +156,19 @@ public class ColorApp extends Application {
 
         // Palette Elements
 
-        // Palette circles
-        HBox circles = new HBox();
-        Circle[] circleList = new Circle[NUMBER_OF_ELEMENTS];
-        for (int i = 0; i  < circleList.length; i++){
-            circleList[i] = new Circle(50);
-            circleList[i].setFill(Color.rgb(50,50,50));
-            circles.getChildren().add(circleList[i]);
-        }
 
-        circles.setAlignment(Pos.CENTER);
-        circles.setPadding(new Insets(15));
+
+        // Palette circles
+//        HBox circles = new HBox();
+//        Circle[] circleList = new Circle[NUMBER_OF_ELEMENTS];
+//        for (int i = 0; i  < circleList.length; i++){
+//            circleList[i] = new Circle(50);
+//            circleList[i].setFill(Color.rgb(50,50,50));
+//            circles.getChildren().add(circleList[i]);
+//        }
+
+//        circles.setAlignment(Pos.CENTER);
+//        circles.setPadding(new Insets(15));
 
 
         // add to palette button
@@ -174,9 +176,13 @@ public class ColorApp extends Application {
         pButton.setText("Add to Palette");
         colorPalette = new ColorPalette();
 
+        PaletteView pv = new PaletteView(colorPalette);
+        pv.circles.setAlignment(Pos.CENTER);
+        pv.circles.setPadding(new Insets(5));
+
         pButton.setOnAction(e -> colorPalette.addColor(currentColor));
         pButton.setOnMouseClicked(e -> {
-            circleList[pointer].setFill(colorPalette.getColor(pointer));
+            pv.getCircleList()[pointer].setFill(colorPalette.getColor(pointer));
             pointer++;
 
             if (pointer == NUMBER_OF_ELEMENTS){
@@ -199,7 +205,7 @@ public class ColorApp extends Application {
         });
 
         palette.setAlignment(Pos.CENTER);
-        palette.getChildren().addAll(pButton,circles, lButton);
+        palette.getChildren().addAll(pButton,pv.circles, lButton);
 
 
         // left and right
