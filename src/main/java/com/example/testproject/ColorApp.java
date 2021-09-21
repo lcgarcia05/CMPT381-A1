@@ -30,6 +30,7 @@ public class ColorApp extends Application {
     ColorPalette colorPalette;
     ListView<ColorPalette> listView;
     Color currentColor;
+    PaletteView pv;
 
     // old
 //    Slider redSlider;
@@ -173,15 +174,12 @@ public class ColorApp extends Application {
         pButton.setText("Add to Palette");
         colorPalette = new ColorPalette();
 
-        HBox circles = new HBox();
-        PaletteView pv = new PaletteView(colorPalette);
-        circles.getChildren().addAll(pv.circle1,pv.circle2, pv.circle3);
-
         pButton.setOnAction(e -> colorPalette.addColor(currentColor));
+        pv = new PaletteView(colorPalette);
         pButton.setOnMouseClicked(e -> {
             pv.getCircleList()[pointer].setFill(colorPalette.getColor(pointer));
+            pv.getCircleList()[pointer].setStroke(Color.BLACK);
             pointer++;
-
             if (pointer == NUMBER_OF_ELEMENTS){
                 pointer = 0;
             }
@@ -191,22 +189,20 @@ public class ColorApp extends Application {
         listView = new ListView<>();
 //        ObservableList<String> listItems = FXCollections.observableArrayList("Test1", "Test2");
         ObservableList<ColorPalette> listItems = FXCollections.observableArrayList();
-        listView.setItems(listItems);
         listView.setCellFactory(listItem -> new PaletteCell());
+        listView.setItems(listItems);
         listView.setPrefHeight(415);
 
         // Add to list button
         Button lButton = new Button();
         lButton.setText("Add to List");
         lButton.setOnAction(e -> {
-            System.out.println(colorPalette);
-            listItems.addAll(colorPalette);
-
-
+            listItems.add(colorPalette);
+            System.out.println(listItems);
         });
 
         palette.setAlignment(Pos.CENTER);
-        palette.getChildren().addAll(pButton,circles, lButton);
+        palette.getChildren().addAll(pButton, pv, lButton);
 
 
         // left and right

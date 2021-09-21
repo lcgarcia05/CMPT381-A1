@@ -6,9 +6,9 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 public class ColorPalette {
-    Color firstColor = Color.rgb(50,50,50);
-    Color secondColor = Color.rgb(50,50,50);
-    Color thirdColor = Color.rgb(50,50,50);
+    Color firstColor = Color.WHITE;
+    Color secondColor = Color.WHITE;
+    Color thirdColor = Color.WHITE;
 
     private int cur = 0;
 
@@ -44,19 +44,6 @@ public class ColorPalette {
         return (int)((firstColor.getRed()) * 255)+ "," + (int)(firstColor.getGreen()* 255) + "," +(int) (firstColor.getBlue()* 255) + "\n" +
                 (int) (secondColor.getRed() * 255)+ "," + (int)(secondColor.getGreen()* 255) + "," + (int)(secondColor.getBlue()* 255)+ "\n" +
                 (int) (thirdColor.getRed() * 255)+ "," + (int)(thirdColor.getGreen()* 255) + "," + (int)(thirdColor.getBlue()* 255);
-    }
-
-    private Integer[] convertToRGB(Color c){
-        Integer[] rgb = new Integer[3];
-        Double r = c.getRed() * 255;
-        Double g = c.getGreen() * 255;
-        Double b = c.getBlue() * 255;
-
-        rgb[0] = r.intValue();
-        rgb[1] = g.intValue();
-        rgb[2] = b.intValue();
-
-        return rgb;
     }
 
     public static void main(String[] args){

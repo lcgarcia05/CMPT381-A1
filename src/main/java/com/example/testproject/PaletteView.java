@@ -7,13 +7,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.Arrays;
+
 public class PaletteView extends Pane {
 
     Circle[] circleList = new Circle[3];
-    Circle circle1;
-    Circle circle2;
-    Circle circle3;
-
+    private Circle circle1;
+    private Circle circle2;
+    private Circle circle3;
     ColorPalette colorPalette;
 
     public PaletteView(ColorPalette cp) {
@@ -21,17 +22,20 @@ public class PaletteView extends Pane {
             colorPalette = new ColorPalette();
         }else{
             this.colorPalette = cp;
-            circle1 = new Circle(50);
-            circle2 = new Circle(50);
-            circle3 = new Circle(50);
-            circleFill();
         }
+        HBox circles = new HBox();
 
-    }
-    private void circleFill(){
-        circle1.setFill(colorPalette.firstColor);
-        circle2.setFill(colorPalette.secondColor);
-        circle3.setFill(colorPalette.thirdColor);
+        circle1 = new Circle(50);
+        circle2 = new Circle(50);
+        circle3 = new Circle(50);
+        circle1.setFill(this.colorPalette.firstColor);
+        circle2.setFill(this.colorPalette.secondColor);
+        circle3.setFill(this.colorPalette.thirdColor);
+
+
+        circles.getChildren().addAll(circle1,circle2,circle3);
+        this.getChildren().add(circles);
+
     }
 
     public Circle[] getCircleList(){

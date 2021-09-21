@@ -10,10 +10,12 @@ public class ColorSlider extends Pane {
     public Slider slider;
     private Label value;
 
-    public ColorSlider(String title) {
-        this.title = new Label(title);
+    public ColorSlider(String t) {
+        this.title = new Label(t);
         this.slider = new Slider(0, 255, 50);
         this.value = new Label();
+
+        this.getChildren().addAll(title, slider, value);
     }
 
     public void setValue(int i){
