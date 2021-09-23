@@ -1,4 +1,4 @@
-package com.example.testproject;
+package com.example.assignment1;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Label;
@@ -14,6 +14,7 @@ public class ColorSlider extends Pane {
         this.title = new Label(t);
         this.slider = new Slider(0, 255, 50);
         this.value = new Label();
+
 
         this.getChildren().addAll(title, slider, value);
     }

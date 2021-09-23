@@ -1,17 +1,17 @@
-package com.example.testproject;
+package com.example.assignment1;
 
 
 import javafx.scene.paint.Color;
 
-import java.util.*;
-
 public class ColorPalette {
-    Color firstColor = Color.WHITE;
-    Color secondColor = Color.WHITE;
-    Color thirdColor = Color.WHITE;
+    private Color firstColor = Color.WHITE;
+    private Color secondColor = Color.WHITE;
+    private Color thirdColor = Color.WHITE;
 
+    // Keeps track of the current index to specify which circle to be updated
     private int cur = 0;
 
+    // Adds a color to the specific color circle
     public void addColor(Color c){
         if (cur == 0){
             firstColor = c;
@@ -27,6 +27,7 @@ public class ColorPalette {
         }
     }
 
+    // Getter used for cycling around the palette circle
     public Color getColor(int i){
         if (i == 0){
             return firstColor;
@@ -46,25 +47,16 @@ public class ColorPalette {
                 (int) (thirdColor.getRed() * 255)+ "," + (int)(thirdColor.getGreen()* 255) + "," + (int)(thirdColor.getBlue()* 255);
     }
 
-    public static void main(String[] args){
-//        ColorPalette c = new ColorPalette();
-        Color red = Color.rgb(255,255,255);
-//        Color green = Color.rgb(150,25,150);
-//        Color blue = Color.rgb(25,255,255);
-//        Color yellow = Color.rgb(12,35,23);
-//        Color brown = Color.rgb(17,23,85);
-//
-//        List<Integer> rgb = new ArrayList<>();
-//
-//        Deque<Color> cc = new LinkedList<>();
-//
-//        c.addColor(red);
-//        c.addColor(green);
-//        c.addColor(blue);
-//        System.out.println(c);
-//
-//        c.addColor(yellow);
-//        System.out.println(c);
+    // Getters
+    public Color getFirstColor() {
+        return firstColor;
+    }
 
+    public Color getSecondColor() {
+        return secondColor;
+    }
+
+    public Color getThirdColor() {
+        return thirdColor;
     }
 }

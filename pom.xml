@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.testproject/com.example.testproject.ColorApp</mainClass>
+                            <mainClass>com.example.testproject/com.example.assignment1.ColorApp</mainClass>
                         </configuration>
                     </execution>
                 </executions>

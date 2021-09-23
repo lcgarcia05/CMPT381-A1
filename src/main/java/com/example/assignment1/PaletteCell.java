@@ -1,4 +1,4 @@
-package com.example.testproject;
+package com.example.assignment1;
 
 import javafx.scene.control.ListCell;
 
@@ -8,6 +8,7 @@ public class PaletteCell extends ListCell<ColorPalette> {
         super.updateItem(item, empty);
         PaletteView pv = new PaletteView(item);
         setGraphic(pv);
+
     }
 
 }

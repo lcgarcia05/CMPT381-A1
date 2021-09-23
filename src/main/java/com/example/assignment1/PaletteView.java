@@ -1,20 +1,16 @@
-package com.example.testproject;
+package com.example.assignment1;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.util.Arrays;
-
 public class PaletteView extends Pane {
 
     Circle[] circleList = new Circle[3];
-    private Circle circle1;
-    private Circle circle2;
-    private Circle circle3;
+    private final Circle circle1;
+    private final Circle circle2;
+    private final Circle circle3;
     ColorPalette colorPalette;
 
     public PaletteView(ColorPalette cp) {
@@ -28,16 +24,22 @@ public class PaletteView extends Pane {
         circle1 = new Circle(50);
         circle2 = new Circle(50);
         circle3 = new Circle(50);
-        circle1.setFill(this.colorPalette.firstColor);
-        circle2.setFill(this.colorPalette.secondColor);
-        circle3.setFill(this.colorPalette.thirdColor);
 
+        circle1.setFill(this.colorPalette.getFirstColor());
+        circle1.setStroke(Color.BLACK);
+
+        circle2.setFill(this.colorPalette.getSecondColor());
+        circle2.setStroke(Color.BLACK);
+
+        circle3.setFill(this.colorPalette.getThirdColor());
+        circle3.setStroke(Color.BLACK);
 
         circles.getChildren().addAll(circle1,circle2,circle3);
         this.getChildren().add(circles);
 
     }
 
+    // Method used to cycle around the palette circles
     public Circle[] getCircleList(){
         circleList[0] = circle1;
         circleList[1] = circle2;

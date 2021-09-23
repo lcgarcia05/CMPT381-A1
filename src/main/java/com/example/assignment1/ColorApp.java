@@ -1,97 +1,62 @@
-package com.example.testproject;
+package com.example.assignment1;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.*;
-
 public class ColorApp extends Application {
-
     Circle circle;
-//    ListView<String> listView;
     ColorPalette colorPalette;
     ListView<ColorPalette> listView;
     Color currentColor;
     PaletteView pv;
-
-    // old
-//    Slider redSlider;
-//    Slider greenSlider;
-//    Slider blueSlider;
-
-
     ColorSlider redSlider;
     ColorSlider greenSlider;
     ColorSlider blueSlider;
+    Button pButton;
+    ObservableList<ColorPalette> listItems;
 
-    int pointer = 0;
+    // Pointer used to change the index of the current palette circle
+    private int pointer = 0;
     static final int NUMBER_OF_ELEMENTS = 3;
 
     @Override
-    public void start(Stage stage) throws IOException {
-
+    public void start(Stage stage){
 
         VBox root = new VBox();
         VBox left = new VBox();
         VBox right = new VBox();
-        VBox palette = new VBox();
 
         // Circle VBox
         VBox cir = new VBox();
         circle = new Circle();
-        circle.setRadius(75);
+        circle.setRadius(100);
+        cir.setPadding(new Insets(10));
         cir.setAlignment(Pos.CENTER);
-
         cir.getChildren().addAll(circle);
-
 
         // Instantiation
         VBox sliderCaption= new VBox();
         VBox sliders = new VBox();
         HBox allSliderElement = new HBox();
 
-        // Labels for the colors
-//        Label red = new Label("Red:");
-//        Label green = new Label("Green:");
-//        Label blue = new Label("Blue:");
-
         // Sliders
-
         redSlider = new ColorSlider("Red:");
         redSlider.setValue(redSlider.getSliderValue());
         redSlider.getValueProperty().addListener(((observableValue, oldValue, newValue) -> {
             redSlider.setValue(newValue .intValue());
             setColor();
         }));
-//        System.out.println(redSlider.slider);
-
-        // old
-//        Label redVal = new Label();
-//        redSlider = new Slider(0,255,50);
-//        redVal.setText(String.valueOf((int)redSlider.getValue()));
-//        redSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-//            redVal.setText(String.valueOf(newValue.intValue()));
-//            setColor();
-////            System.out.println(currentColor);
-//        });
 
         greenSlider = new ColorSlider("Green:");
         greenSlider.setValue(greenSlider.getSliderValue());
@@ -99,17 +64,6 @@ public class ColorApp extends Application {
             greenSlider.setValue(newValue.intValue());
             setColor();
         }));
-//        System.out.println(greenSlider.slider);
-
-        // old
-//        Label greenVal = new Label();
-//        greenSlider = new Slider(0,255,50);
-//        greenVal.setText(String.valueOf((int)greenSlider.getValue()));
-//        greenSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-//            greenVal.setText(String.valueOf(newValue.intValue()));
-//            setColor();
-////            System.out.println(currentColor);
-//        });
 
         blueSlider = new ColorSlider("Blue:");
         blueSlider.setValue(blueSlider.getSliderValue());
@@ -117,18 +71,6 @@ public class ColorApp extends Application {
             blueSlider.setValue(newValue .intValue());
             setColor();
         }));
-//        System.out.println(blueSlider.slider);
-
-        // old
-//        Label blueVal = new Label();
-//        blueSlider = new Slider(0,255,50);
-//        blueVal.setText(String.valueOf((int)blueSlider.getValue()));
-//        blueSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-//            blueVal.setText(String.valueOf(newValue.intValue()));
-//            setColor();
-////            System.out.println(currentColor);
-//        });
-
 
         // Slider's names
         sliderCaption.setSpacing(5);
@@ -149,78 +91,43 @@ public class ColorApp extends Application {
         // Add all the elements into HBox to get a column layout
         allSliderElement.getChildren().addAll(sliderCaption, sliders, sliderValues);
 
-        setColor();
-
-
         // Palette Elements
-
-
-
-        // Palette circles
-//        HBox circles = new HBox();
-//        Circle[] circleList = new Circle[NUMBER_OF_ELEMENTS];
-//        for (int i = 0; i  < circleList.length; i++){
-//            circleList[i] = new Circle(50);
-//            circleList[i].setFill(Color.rgb(50,50,50));
-//            circles.getChildren().add(circleList[i]);
-//        }
-
-//        circles.setAlignment(Pos.CENTER);
-//        circles.setPadding(new Insets(15));
-
-
         // add to palette button
-        Button pButton = new Button();
+        pButton = new Button();
         pButton.setText("Add to Palette");
         colorPalette = new ColorPalette();
-
-        pButton.setOnAction(e -> colorPalette.addColor(currentColor));
+        pButton.setOnAction(this::addToPaletteHandle);
         pv = new PaletteView(colorPalette);
-        pButton.setOnMouseClicked(e -> {
-            pv.getCircleList()[pointer].setFill(colorPalette.getColor(pointer));
-            pv.getCircleList()[pointer].setStroke(Color.BLACK);
-            pointer++;
-            if (pointer == NUMBER_OF_ELEMENTS){
-                pointer = 0;
-            }
-        });
 
         // List View
-        listView = new ListView<>();
-//        ObservableList<String> listItems = FXCollections.observableArrayList("Test1", "Test2");
-        ObservableList<ColorPalette> listItems = FXCollections.observableArrayList();
-        listView.setCellFactory(listItem -> new PaletteCell());
-        listView.setItems(listItems);
-        listView.setPrefHeight(415);
+        createListView();
 
         // Add to list button
         Button lButton = new Button();
         lButton.setText("Add to List");
-        lButton.setOnAction(e -> {
-            listItems.add(colorPalette);
-            System.out.println(listItems);
-        });
+        lButton.setOnAction(this::addToListHandle);
 
+        VBox palette = new VBox();
+        palette.setSpacing(20);
         palette.setAlignment(Pos.CENTER);
         palette.getChildren().addAll(pButton, pv, lButton);
 
-
         // left and right
         left.getChildren().addAll(cir, allSliderElement,palette);
-        right.getChildren().addAll(listView);
+        right.getChildren().add(listView);
 
         // Combine panels
         HBox combined = new HBox();
         combined.getChildren().addAll(left,right);
 
-
         // Root
         root.getChildren().addAll(combined);
-        stage.setTitle("Color Palette!");
-        stage.setScene(new Scene(root, 580, 415));
+        stage.setTitle("Color Palette");
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
+    // Method for setting the current color based on the slider values
     public void setColor(){
         int red = redSlider.getSliderValue();
         int green = greenSlider.getSliderValue();
@@ -230,13 +137,35 @@ public class ColorApp extends Application {
         circle.setFill(currentColor);
     }
 
-//    public List<Integer> getRGB(){
-//        int red = redSlider.valueProperty().getValue().intValue();
-//        int green = greenSlider.valueProperty().getValue().intValue();
-//        int blue = blueSlider.valueProperty().getValue().intValue();
-//
-//        return Arrays.asList(red, green, blue);
-//    }
+    // Method for handling the event whenever addToPalette button has received an action
+    public void addToPaletteHandle(ActionEvent actionEvent){
+        colorPalette.addColor(currentColor);
+        pv.getCircleList()[pointer].setFill(colorPalette.getColor(pointer));
+        pv.getCircleList()[pointer].setStroke(Color.BLACK);
+        pointer++;
+        if (pointer == NUMBER_OF_ELEMENTS) {
+            pointer = 0;
+        }
+    }
+
+    // Method for handling the event whenever addToList button has received an action
+    public void addToListHandle(ActionEvent actionEvent){
+        ColorPalette newCP = new ColorPalette();
+        newCP.addColor(colorPalette.getFirstColor());
+        newCP.addColor(colorPalette.getSecondColor());
+        newCP.addColor(colorPalette.getThirdColor());
+        listItems.add(newCP);
+    }
+
+    // Initialize listview
+    public void createListView(){
+        listView = new ListView<>();
+        listItems = FXCollections.observableArrayList();
+        listView.setItems(listItems);
+        listView.setCellFactory(listItem -> new PaletteCell());
+        listView.setPrefWidth(330);
+        listView.setPrefHeight(550);
+    }
 
     public static void main(String[] args) {
         launch();
